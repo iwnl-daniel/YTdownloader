@@ -3,9 +3,20 @@
 # YTdownloader app
 
 import os
+import tkinter
 
+import customtkinter
 from pytube import YouTube
 
+# Settings for the app
+customtkinter.set_appearance_mode("System")
+customtkinter.set_default_color_theme("blue")
+app = customtkinter.CTk()
+app.geometry("600x400")
+app.title("YTdownloader")
+app.mainloop()
+
+# Downloading Logic (will change once UI is compleate)
 while True:
     toDownload = str(input("Enter the YouTube link\n➜ "))
     print("Would you like to download MP3 or MP4?")
