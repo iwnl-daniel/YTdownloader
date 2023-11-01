@@ -9,15 +9,31 @@ import customtkinter
 from pytube import YouTube
 
 
-def downloadVideo():
+# function to download video
+def download_video():
     try:
-        fromYT = YouTube(url=url.get())
-        videoTitle.configure(text=fromYT.title)
+        ytLink = url.get()
+        fromYT = YouTube(ytLink)
         video = fromYT.streams.get_highest_resolution()
         video.download(output_path='YTD_videos')
+        video_title.configure(text=f'{fromYT.title} Downloaded', text_color="green")
     except:
-        videoTitle.configure(text="Downloading Error") 
-        
+        video_title.configure(text="Downloading Error", text_color="red")
+
+# function to download audio
+def download_audio():
+    try:
+        ytLink = url.get()
+        fromYT = YouTube(ytLink)
+        audio = fromYT.streams.get_audio_only()
+        outaudio = audio.download(output_path="YTD_Audios")
+        base, ext = os.path.splitext(outaudio)
+        new_file = base + ".mp3"
+        os.rename(outaudio, new_file)
+        video_title.configure(text=f'{fromYT.title} Downloaded', text_color="green")
+    except:
+        video_title.configure(text="Downloading Error", text_color="red")
+    
 # Settings for the app
 app = customtkinter.CTk()
 app.geometry("600x400")
@@ -26,39 +42,17 @@ app.title("YTdownloader")
 title = customtkinter.CTkLabel(app, text="Enter YouTube Link")
 title.pack(padx=10,pady=10)
 
-videoURL = tkinter.StringVar()
-url = customtkinter.CTkEntry(app, width=300,height=40,textvariable=videoURL)
+video_url = tkinter.StringVar()
+url = customtkinter.CTkEntry(app, placeholder_text="Enter YouTube Link", width=300,height=40, textvariable=video_url)
 url.pack()
 
-videoTitle = customtkinter.CTkLabel(app, text="")
-videoTitle.pack()
+video_title = customtkinter.CTkLabel(app, text="")
+video_title.pack(padx=10,pady=10)
 
-finishedDownload = customtkinter.CTkLabel(app, text="")
-finishedDownload.pack()
+audio_download = customtkinter.CTkButton(app, text="Download MP3", command=download_audio)
+audio_download.pack(padx=10,pady=10)
 
-
-download = customtkinter.CTkButton(app, text="Download", command=downloadVideo)
-download.pack(padx=10,pady=10)
+video_download = customtkinter.CTkButton(app, text="Download MP4", command=download_video)
+video_download.pack(padx=10,pady=10)
 
 app.mainloop()
-
-# Downloading Logic (will change once UI is compleate)
-# while True:
-#     toDownload = str(input("Enter the YouTube link\n➜ "))
-#     print("Would you like to download MP3 or MP4?")
-#     print("Enter [1] for MP3 (Audio Only)")
-#     print("Enter [2] for MP4 (Video + Audio)")
-#     userInput = int(input("➜ "))
-#     fromYT = YouTube(url=toDownload)
-#     if userInput == 1:
-#         audio = fromYT.streams.get_audio_only()
-#         outaudio = audio.download(output_path="YTD_Audios")
-#         base, ext = os.path.splitext(outaudio)
-#         new_file = base + ".mp3"
-#         os.rename(outaudio, new_file)
-#     if userInput == 2:
-#         video = fromYT.streams.get_highest_resolution()
-#         video.download(output_path='YTD_videos')
-#     end = str(input("Would you like to download again? (Y/n)"))
-#     if end in ['n','N']:
-#         break
