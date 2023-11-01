@@ -9,23 +9,36 @@ import customtkinter
 from pytube import YouTube
 
 
-def test():
-    a = customtkinter.CTkLabel(app, text="HELLO APP")
-    a.pack(padx=10,pady=10)
-    print("hello world")
-
+def downloadVideo():
+    try:
+        fromYT = YouTube(url=url.get())
+        videoTitle.configure(text=fromYT.title)
+        video = fromYT.streams.get_highest_resolution()
+        video.download(output_path='YTD_videos')
+    except:
+        videoTitle.configure(text="Downloading Error") 
+        
 # Settings for the app
 app = customtkinter.CTk()
 app.geometry("600x400")
 app.title("YTdownloader")
+
 title = customtkinter.CTkLabel(app, text="Enter YouTube Link")
 title.pack(padx=10,pady=10)
+
 videoURL = tkinter.StringVar()
 url = customtkinter.CTkEntry(app, width=300,height=40,textvariable=videoURL)
 url.pack()
 
-download = customtkinter.CTkButton(app, text="Download", command=test)
-download.pack()
+videoTitle = customtkinter.CTkLabel(app, text="")
+videoTitle.pack()
+
+finishedDownload = customtkinter.CTkLabel(app, text="")
+finishedDownload.pack()
+
+
+download = customtkinter.CTkButton(app, text="Download", command=downloadVideo)
+download.pack(padx=10,pady=10)
 
 app.mainloop()
 
