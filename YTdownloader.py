@@ -15,7 +15,7 @@ def download_audio():
         ytLink = url.get()
         fromYT = YouTube(ytLink, on_progress_callback=on_progress)
         audio = fromYT.streams.get_audio_only()
-        outaudio = audio.download(output_path="YTD_Audios")
+        outaudio = audio.download(output_path="../../../YTD_Audios")
         base, ext = os.path.splitext(outaudio)
         new_file = base + ".mp3"
         os.rename(outaudio, new_file)
@@ -29,16 +29,16 @@ def download_audio():
 def download_video():
     try:
         ytLink = url.get()
-        fromYT = YouTube(ytLink)
+        fromYT = YouTube(ytLink, on_progress_callback=on_progress)
         video = fromYT.streams.get_highest_resolution()
-        video.download(output_path='YTD_videos')
+        video.download(output_path="../../../YTD_videos")
         video_title.configure(text=f'{fromYT.title} Downloaded', text_color="green")
     except:
         video_title.configure(text="Downloading Error", text_color="red")
     url.delete(0, 'end')
     url.insert(0, "")
 
-# 
+# function for the progress bar and progress percent
 def on_progress(stream, chunk, bytes_remaining):
     total_size = stream.filesize
     bytes_downloaded = total_size - bytes_remaining
@@ -47,11 +47,9 @@ def on_progress(stream, chunk, bytes_remaining):
     prog_percent.configure(text=f'{per}%')
     prog_percent.update()
     prog_bar.set(float(percentage_of_compleation) / 100)
-#
 
 # Settings for the app
 customtkinter.set_appearance_mode("system")
-
 app = customtkinter.CTk()
 app.geometry("600x400")
 app.title("YTdownloader")
@@ -67,7 +65,7 @@ header.pack(padx=10,pady=10)
 
 # textbox that allows the user to enter a link to a YouTube video
 video_url = tkinter.StringVar()
-url = customtkinter.CTkEntry(app, width=300,height=40,
+url = customtkinter.CTkEntry(app, width=450,height=40,
                              textvariable=video_url)
 url.pack(padx=10,pady=10)
 
