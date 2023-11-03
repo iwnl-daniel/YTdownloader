@@ -15,7 +15,8 @@ def download_audio():
         ytLink = url.get()
         fromYT = YouTube(ytLink, on_progress_callback=on_progress)
         audio = fromYT.streams.get_audio_only()
-        outaudio = audio.download(output_path="../../../YTD_Audios")
+        outaudio = audio.download(output_path="../../../YTD_Audios")    # For MAC
+        # outaudio = audio.download(output_path="YTD_Audios")             # For Windows
         base, ext = os.path.splitext(outaudio)
         new_file = base + ".mp3"
         os.rename(outaudio, new_file)
@@ -31,7 +32,8 @@ def download_video():
         ytLink = url.get()
         fromYT = YouTube(ytLink, on_progress_callback=on_progress)
         video = fromYT.streams.get_highest_resolution()
-        video.download(output_path="../../../YTD_videos")
+        video.download(output_path="../../../YTD_videos")               # For MAC
+        # video.download(output_path="YTD_videos")                        # For Windows
         video_title.configure(text=f'{fromYT.title} Downloaded', text_color="green")
     except:
         video_title.configure(text="Downloading Error", text_color="red")
