@@ -18,13 +18,22 @@ The purpose of this Python application is for the user to be able to download Yo
 
 ## Running Code
 
-###### Unix/ macOS:
+###### Unix(macOS):
 
 ```shell
 python3 -m venv env
 source env/bin/activate
 pip3 install --upgrade -r requirements.txt
 python3 app.py
+```
+
+###### Lunix(Ubuntu):
+```shell
+sudo apt update
+sudo apt install python3-venv python3-pip
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
 ```
 
 ###### Windows:
