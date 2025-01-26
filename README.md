@@ -24,7 +24,7 @@ The purpose of this Python application is for the user to be able to download Yo
 python3 -m venv env
 source env/bin/activate
 pip3 install --upgrade -r requirements.txt
-python3 app.py
+python3 YTdownloader.py
 ```
 
 ###### Lunix(Ubuntu):
@@ -34,6 +34,9 @@ sudo apt install python3-venv python3-pip
 python3 -m venv env
 source env/bin/activate
 pip install -r requirements.txt
+sudo apt install ffmpeg
+sudo apt install python3-tk
+python YTdownloader.py
 ```
 
 ###### Windows:
@@ -42,7 +45,7 @@ pip install -r requirements.txt
 py -m venv env
 .\env\Scripts\activate
 pip install --upgrade -r requirements.txt
-python3 app.py
+python YTdownloader.py
 ```
 
 ## Running App
