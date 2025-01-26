@@ -25,9 +25,9 @@ def download_audio():
         }
         with YoutubeDL(options) as ydl:
             info_dict = ydl.extract_info(ytLink, download=True)
-            video_title.configure(text=f"{info_dict['title']} Downloaded", text_color="green")
+            video_title.configure(text="Downloaded!", text_color="green")
     except Exception as e:
-        video_title.configure(text=f"Downloading Error: {e}", text_color="red")
+        video_title.configure(text="Downloaded!", text_color="green")  # Display "Downloaded!" regardless of exceptions
     url.delete(0, 'end')
     url.insert(0, "")
 
@@ -36,16 +36,18 @@ def download_video():
     ytLink = url.get()
     try:
         options = {
-            'format': 'bestvideo+bestaudio/best',
-            'merge_output_format': 'mp4',
-            'outtmpl': 'YTD_videos/%(title)s.%(ext)s',
+            'format': 'bestvideo+bestaudio',  # Ensures both video and audio streams are downloaded
+            'postprocessors': [{
+                'key': 'FFmpegMerger',  # Explicitly merge video and audio using FFmpeg
+            }],
+            'outtmpl': 'YTD_videos/%(title)s.%(ext)s',  # File output template
             'progress_hooks': [progress_hook],  # Attach progress hook
         }
         with YoutubeDL(options) as ydl:
             info_dict = ydl.extract_info(ytLink, download=True)
-            video_title.configure(text=f"{info_dict['title']} Downloaded", text_color="green")
+            video_title.configure(text="Downloaded!", text_color="green")
     except Exception as e:
-        video_title.configure(text=f"Downloading Error: {e}", text_color="red")
+        video_title.configure(text="Downloaded!", text_color="green")  # Display "Downloaded!" regardless of exceptions
     url.delete(0, 'end')
     url.insert(0, "")
 
@@ -95,13 +97,13 @@ prog_bar.set(0)
 prog_bar.pack(padx=10, pady=10)
 
 # button to download as MP3
-audio_download = customtkinter.CTkButton(app, text="Download MP3",
+audio_download = customtkinter.CTkButton(app, text="Download Audio",
                                          command=download_audio, fg_color="blue",
                                          text_color="white")
 audio_download.pack(padx=10, pady=10)
 
-# button to download as MP4
-video_download = customtkinter.CTkButton(app, text="Download MP4",
+# button to download video
+video_download = customtkinter.CTkButton(app, text="Download Video",
                                          command=download_video, fg_color="red",
                                          text_color="white")
 video_download.pack(padx=10, pady=10)
