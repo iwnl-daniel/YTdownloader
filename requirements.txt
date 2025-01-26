@@ -1,3 +1,2 @@
-pytube
-packaging
 customtkinter
+yt-dlp
